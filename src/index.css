@@ -24,31 +24,13 @@
   }
 
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .animate-fade-in {
-    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
+  .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-  /* Immersive UI glow system */
-  .glow-dot {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    filter: blur(25px);
-    opacity: 0.4;
-    z-index: 0;
-    pointer-events: none;
-  }
+  .glow-dot { position: absolute; width: 60px; height: 60px; border-radius: 50%; filter: blur(25px); opacity: 0.4; z-index: 0; pointer-events: none; }
 
   .glow-green { background: #22c55e; }
   .glow-red { background: #ef4444; }

@@ -20,57 +20,18 @@ export enum ReportStatus {
   RESOLVED = "Resolved"
 }
 
-export interface Coordinates {
-  latitude: number;
-  longitude: number;
-  display_name?: string;
-  zone?: string;
-}
+export interface Coordinates { latitude: number; longitude: number; display_name?: string; zone?: string; }
 
 export interface GovernmentDepartment {
-  id: string;
-  name: string;
-  abbreviation: string;
-  icon: string;
-  description: string;
-  contactEmail: string;
-  stats: {
-    solved: number;
-    pending: number;
-    efficiency: string;
-  };
+  id: string; name: string; abbreviation: string; icon: string; description: string; contactEmail: string;
+  stats: { solved: number; pending: number; efficiency: string; };
   glowColor: "green" | "red" | "blue" | "purple" | "yellow";
 }
 
 export interface CivicReport {
-  id: string;
-  referenceId: string;
-  title: string;
-  description: string;
-  category: IssueCategory;
-  urgency: UrgencyLevel;
-  status: ReportStatus;
-  location: Coordinates;
-  department: string; // ID of the department
-  formalLetter: string;
-  followUpLetter?: string;
-  createdAt: string;
-  daysActive: number;
-  communityScore: number; // Community Pressure Score / Signatures (up to 1500)
-  needsHumanReview: boolean;
-  reporterName: string;
-  reporterId: string;
-  mediaUrl?: string;
-  voiceUrl?: string;
-  isFollowUpDrafted: boolean;
+  id: string; referenceId: string; title: string; description: string; category: IssueCategory; urgency: UrgencyLevel;
+  status: ReportStatus; location: Coordinates; department: string; formalLetter: string; followUpLetter?: string; createdAt: string;
+  daysActive: number; communityScore: number; needsHumanReview: boolean; reporterName: string; reporterId: string; mediaUrl?: string; voiceUrl?: string; isFollowUpDrafted: boolean;
 }
 
-export interface NotificationAlert {
-  id: string;
-  title: string;
-  message: string;
-  time: string;
-  type: "info" | "success" | "warning" | "alert";
-  glowColor: "green" | "red" | "blue" | "purple" | "yellow";
-  read: boolean;
-}
+export interface NotificationAlert { id: string; title: string; message: string; time: string; type: "info" | "success" | "warning" | "alert"; glowColor: "green" | "red" | "blue" | "purple" | "yellow"; read: boolean; }
