@@ -1,0 +1,3 @@
+Triggering redeploy to ensure Vercel builds the latest main commit.
+Timestamp: 2026-07-05T15:26:30Z
+Source: Automated redeploy trigger from GitHub Copilot sync.
