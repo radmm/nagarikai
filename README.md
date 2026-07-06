@@ -73,6 +73,73 @@ nagarikdesu/
 └── README.md
 ```
 
+a. Wireframe / Mock Diagram
+
+```
++---------------------------------------------------------------------------------+
+| [ Logo: Nagarikdesu ]  [ Motto: Voice for Bengaluru ]     [ EN | ಕನ್ನಡ | हिंदी ] |
++---------------------------------------------------------------------------------+
+| Sidebar (Desktop) | Main Content Area                                           |
+|                   |                                                             |
+| [ ] Dashboard     |  +-------------------+  +-------------------+               |
+| [ ] Heatmap       |  | Total Cases: 12   |  | Pressure Score: 85 |               |
+| [ ] My Cases      |  +-------------------+  +-------------------+               |
+| [ ] Authorities   |                                                             |
+| [ ] Notifications |  +-------------------------------------------------------+  |
+|                   |  | [ Button: + Report New Issue ]                        |  |
+|                   |  +-------------------------------------------------------+  |
+|                   |                                                             |
+|                   |  +-------------------------------------------------------+  |
+|                   |  | Active Reports Feed                                   |  |
+|                   |  | > #REP-001: Pothole at Indiranagar (Urgent)           |  |
+|                   |  | > #REP-002: Water Leakage at Koramangala              |  |
+|                   |  +-------------------------------------------------------+  |
+|                   |                                                             |
++-------------------+-------------------------------------------------------------+
+| Bottom Nav (Mobile): [ Dashboard ] [ Map ] [ + ] [ Cases ] [ Alerts ]           |
++---------------------------------------------------------------------------------+
+```
+
+b. 
+```mermaid
+
+graph TD
+    User["Citizen (UI)"] -->|"Submit Complaint"| NewReport["src/components/NewReport.tsx"]
+    NewReport -->|"POST /api/analyze-report"| Express["server.ts (Express)"]
+    
+    subgraph Backend
+        Express -->|"Auth & Initialize"| GenAI["@google/genai SDK"]
+        GenAI -->|"Analyze & Draft Letter"| Gemini["Google Gemini 3.5 Flash"]
+        Gemini -->|"Structured JSON"| Express
+    end
+    
+    Express -->|"Analysis Results"| App["src/App.tsx"]
+    App -->|"Sync State"| LocalStorage[("Browser localStorage")]
+    App -->|"Display Details"| CaseDetails["src/components/CaseDetails.tsx"]
+    
+    Dashboard["src/components/Dashboard.tsx"] -->|"Read Stats"| App
+    Heatmap["src/components/Heatmap.tsx"] -->|"Visualize Coordinates"| App
+```
+
+c, Key Architectural Details
+
+Frontend (React/Vite):
+
+Located in src/.
+Uses a single-page architecture where the tab state in src/App.tsx controls which component is rendered.
+Styles are managed via Tailwind CSS with a dark-mode "glassmorphism" aesthetic.
+Backend (Express):
+
+Defined in server.ts.
+Acts as a bridge to the Gemini AI API to prevent exposing API keys on the frontend.
+Includes a Graceful Fallback: If the Gemini API fails or no key is provided, the server returns a pre-defined mock response (mockFallbackResponse) so the app remains functional for testing.
+AI Engine:
+
+The backend uses a system prompt that instructs Gemini to act as a legal-expert civic advocacy agent.
+It enforces a strict JSON schema requiring a title, category, urgency, department assignment, and a formal legal letter referencing municipal codes.
+Persistence:
+
+There is no external database (like PostgreSQL or MongoDB). All user reports are persisted locally in the user's browser using localStorage (managed in src/App.tsx).
 
 
 ## 4. Other important information
